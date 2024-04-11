@@ -1,6 +1,5 @@
 use bevy::{ecs::{component::Component, system::Resource}, render::color::Color, utils::HashMap};
-
-use crate::chess_comp::coordinates::PieceCoord;
+use crate::design_pieces::piece_coords::PieceCoord;
 
 #[derive(Resource, Default, Debug, PartialEq, Eq)]
 pub struct PieceMoveSet{

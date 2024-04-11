@@ -4,75 +4,9 @@ use bevy::{
     }, hierarchy::{BuildChildren, DespawnRecursiveExt}, prelude::default, render::color::Color, text::TextStyle, ui::{node_bundles::{ButtonBundle, NodeBundle, TextBundle}, *}, window::{PrimaryWindow, Window, WindowResizeConstraints, WindowResized, WindowResolution}
 };
 
-use crate::{chess_comp::coordinates::PieceCoord, resources::piece_set::{MoveType, PieceMoveSet, PieceType}, ui_defaults::{GRIDOUTER, MAINBACK, MAINBTN, MAINBTNHOV, MAINBTNSEL, MAINBTNTXT, SECBTN, SECBTNHOV, SECBTNSEL, SECBTNTXT, TILEDARK, TILEDARKALT, TILELIGHT, TILELIGHTALT, UIBACK}, RootNode};
-
-#[derive(Component, Debug, PartialEq, Eq)]
-pub struct PieceGrid;
-
-#[derive(Component, Debug, PartialEq, Eq)]
-pub struct RightPanel;
-
-#[derive(Resource, Debug, PartialEq, Eq)]
-pub struct UiGridData{
-    lst_moves: PieceMoveSet,
-    piece_type: Option<PieceType>,
-    edit_limit: u8, 
-}
-
-
-#[derive(Resource, Debug, Default, PartialEq, Eq)]
-pub struct EditType{
-    move_type: MoveType,
-    inf: bool,
-}
-
-#[derive(Component, Debug, Default, PartialEq, Eq)]
-pub struct InfiniteButton{selected: bool}
-
-impl Default for UiGridData {
-    fn default() -> Self {
-        Self { 
-            lst_moves: PieceMoveSet::default(), 
-            piece_type: None, 
-            edit_limit: 3u8 
-        }
-    } 
-}
-
-#[derive(Component ,Debug, PartialEq, Eq, Hash)]
-struct GridSquare {
-    is_editable: bool,
-    is_white: bool,
-    status: Option<MoveType>,
-}
-
-#[derive(Component ,Debug, PartialEq, Eq, Hash)]
-struct MidSquare{
-    piece: Option<PieceType>
-}
-
-#[derive(Component ,Debug, PartialEq, Eq, Hash)]
-pub struct SaveButton;
-
-impl GridSquare{
-    fn get_color(&self, default: Color) -> Color{
-        let mut col = if let Some(status) = &self.status{
-            match status {
-                MoveType::All => Color::RED,
-                MoveType::Enemies => Color::ORANGE,
-                MoveType::None => Color::LIME_GREEN
-            }
-        }
-        else {default};
-
-        //darken
-        if !self.is_editable {
-            col.set_l(0.7);
-        }
-
-        col
-    }
-}
+use crate::{rule_data::piece_set::{MoveType, PieceMoveSet, PieceType}, ui_const::{GRIDOUTER, MAINBACK, MAINBTN, MAINBTNHOV, MAINBTNSEL, MAINBTNTXT, SECBTN, SECBTNHOV, SECBTNSEL, SECBTNTXT, TILEDARK, TILEDARKALT, TILELIGHT, TILELIGHTALT, UIBACK}, RootNode};
+use crate::design_pieces::piece_coords::PieceCoord;
+use crate::design_pieces::piece_ecs::{GridSquare, InfiniteButton, MidSquare, PieceGrid, RightPanel, SaveButton, UiGridData};
 
 pub fn setup_design_pieces(
     mut commands: Commands,

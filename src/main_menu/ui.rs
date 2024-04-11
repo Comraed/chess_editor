@@ -1,5 +1,5 @@
 use std::fmt::Display;
-use crate::{ui_defaults::{MAINBACK, MAINBTN, MAINBTNHOV, MAINBTNSEL, MAINBTNTXT}, RootNode, WindowState};
+use crate::{ui_const::{MAINBACK, MAINBTN, MAINBTNHOV, MAINBTNSEL, MAINBTNTXT}, RootNode, WindowState};
 use bevy::{
     ecs::{
         query::With, 

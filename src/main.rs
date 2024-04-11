@@ -1,15 +1,15 @@
 mod main_menu;
-mod ui_defaults;
-mod design_peices;
-mod resources;
-mod chess_comp;
+mod ui_const;
+mod design_pieces;
+mod rule_data;
 
 use bevy::{prelude::*, ui::UiSystem};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-use chess_comp::coordinates::PieceCoord;
-use design_peices::ui::{despawn_design_pieces, handle_save_design_pieces, resize_grid, setup_design_pieces, EditType, UiGridData};
+use design_pieces::ui::{despawn_design_pieces, handle_save_design_pieces, resize_grid, setup_design_pieces};
 use main_menu::ui::{despawn_main_menu, handle_main_menu_ui, setup_main_menu};
-use resources::piece_set::PieceMoveSet;
+use rule_data::piece_set::PieceMoveSet;
+use crate::design_pieces::piece_coords::PieceCoord;
+use crate::design_pieces::piece_ecs::{EditType, UiGridData};
 
 #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum WindowState {
